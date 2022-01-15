@@ -1,4 +1,4 @@
-// 第一题 哈希解法
+// 第一题 哈希解法 C语言
 struct hashTable {
 	int key;
 	int val;
@@ -44,7 +44,7 @@ int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
 	return NULL;
 }
 
-//第二题
+//第二题 C语言
 
 struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
 	struct ListNode *head = NULL, *tail = NULL;
@@ -85,3 +85,31 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
 	}
 	return head;
 }
+
+
+# 第三题（滑动窗口法）python
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+    # 哈希集合，记录出现过的字符
+    occ = set()
+    n = len(s)
+    # 右指针，初始值为-1，表示还未开始
+    rk = -1
+    # 最大字子符串长度
+    ans = 0
+    for i in range(n):
+        # 左指针向右移动
+        if i != 0:
+            occ.remove(s[i - 1])
+        
+        # 控制右指针不出界并且确保当前右指针指向的字符不在occ集合中
+        while rk + 1 < n and s[rk + 1] not in occ:
+            # 将当前字符加入到occ集合中
+            occ.add(s[rk + 1])
+            # 右指针不断地向右移动
+            rk += 1
+        # 将最长的子字符串的长度记录下来
+        # (rk - i + 1)是从左指针i到右指针rk的无重复子字符串的长度
+        # ans是到目前为止，最长的子字符串的长度
+        ans = max(ans, rk - i + 1)
+    return ans
