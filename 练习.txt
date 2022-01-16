@@ -90,26 +90,83 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
 # 第三题（滑动窗口法）python
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-    # 哈希集合，记录出现过的字符
-    occ = set()
-    n = len(s)
-    # 右指针，初始值为-1，表示还未开始
-    rk = -1
-    # 最大字子符串长度
-    ans = 0
-    for i in range(n):
-        # 左指针向右移动
-        if i != 0:
-            occ.remove(s[i - 1])
+        # 哈希集合，记录出现过的字符
+        occ = set()
+        n = len(s)
+        # 右指针，初始值为-1，表示还未开始
+        rk = -1
+        # 最大字子符串长度
+        ans = 0
+        for i in range(n):
+            # 左指针向右移动
+            if i != 0:
+                occ.remove(s[i - 1])
+            
+            # 控制右指针不出界并且确保当前右指针指向的字符不在occ集合中
+            while rk + 1 < n and s[rk + 1] not in occ:
+                # 将当前字符加入到occ集合中
+                occ.add(s[rk + 1])
+                # 右指针不断地向右移动
+                rk += 1
+            # 将最长的子字符串的长度记录下来
+            # (rk - i + 1)是从左指针i到右指针rk的无重复子字符串的长度
+            # ans是到目前为止，最长的子字符串的长度
+            ans = max(ans, rk - i + 1)
+        return ans
+		
+
+#第五题 最长回文子串_动态规划 python
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        n = len(s)
+        # 当长度为1时，字符串s就是回文串
+        if n < 2:
+            return s
         
-        # 控制右指针不出界并且确保当前右指针指向的字符不在occ集合中
-        while rk + 1 < n and s[rk + 1] not in occ:
-            # 将当前字符加入到occ集合中
-            occ.add(s[rk + 1])
-            # 右指针不断地向右移动
-            rk += 1
-        # 将最长的子字符串的长度记录下来
-        # (rk - i + 1)是从左指针i到右指针rk的无重复子字符串的长度
-        # ans是到目前为止，最长的子字符串的长度
-        ans = max(ans, rk - i + 1)
-    return ans
+        # 初始化最大长度为1，起始位置为0
+        # 最后利用这两个变量在字符串中截取目标子串，达到降低开销的作用
+        max_len = 1
+        begin = 0
+        # 用一个二维布尔数组来表示从i到j是否可达
+        # dp[i][j]的True或False表示在字符串s中从i到j是否为回文串
+        dp = [[False] * n for _ in range(n)]
+        for i in range(n):
+            dp[i][i] = True
+        
+        # 开始递推
+        # L表示字符串长度，i表示左指针，j表示右指针
+        # 长度从2开始，最大为n
+        for L in range(2, n+1):
+            
+            for i in range(n):
+                # 由L和i可以确定右指针，j-i+1=L
+                j = L + i - 1
+                # 当右指针越界时，退出循环
+                if j >= n:
+                    break
+                
+                # s[i]不等于s[j]，则一定有dp[i][j]==False
+                if s[i] != s[j]:
+                    dp[i][j] = False
+                # s[i]等于s[j]，分情况讨论
+                else:
+                    # j-i为从i到j的距离
+                    # j-i为0表示是一个字符的子串
+                    # j-i为1表示是两个字符的子串
+                    # j-i为2表示是三个字符的子串
+                    # 以上三种情况，无论哪种，当s[i]等于s[j]时，该子串都显然是回文串
+                    if j-i < 3:
+                        dp[i][j] = True
+                    # 若不是上述情况，当s[i]等于s[j]时
+                    # dp[i][j]为True还是False取决于dp[i+1][j-1]
+                    else:
+                        dp[i][j] = dp[i + 1][j - 1]
+                    
+                # 只要dp[i][j]==True成立，就表示s[i...j]是回文串
+                # 此时记录回文长度和起始位置
+                # 当dp[i][j]==True且(j-i+1)大于当前最大子串长度时，更新数据
+                if dp[i][j] and j - i + 1 > max_len:
+                    max_len = j - i + 1
+                    begin = i
+                
+        return s[begin:begin + max_len]
