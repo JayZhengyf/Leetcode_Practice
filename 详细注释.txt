@@ -170,3 +170,32 @@ class Solution:
                     begin = i
                 
         return s[begin:begin + max_len]
+        
+        
+# 第五题 最长回文子串_中心扩展算法 python
+class Solution:
+    # 定义中心扩展的方法
+    def expandAroundCenter(self, s, left, right):
+        # 左指针left扩展不能小于0，右指针right扩展不能大于len(s)
+        while left >= 0 and right < len(s) and s[left] == s[right]:
+            # 左指针向左扩展，右指针向右扩展
+            left -= 1
+            right += 1
+        # 退出循环时，一定是循环条件有不满足，则返回上一步的值
+        return left + 1, right - 1
+    def longestPalindrome(self, s: str) -> str:
+        start, end = 0, 0
+        # 从临界状态（长度为1或2）进行扩展
+        for i in range(len(s)):
+            # 对长度为1的子串进行扩展
+            left1, right1 = self.expandAroundCenter(s, i, i)
+            # 对长度为2的子串进行扩展
+            left2, right2 = self.expandAroundCenter(s, i, i + 1)
+            
+            # 更新start和end
+            if right1 - left1 > end - start:
+                start, end = left1, right1
+            if right2 - left2 > end - start:
+                start, end = left2, right2
+        return s[start: end + 1]
+            
