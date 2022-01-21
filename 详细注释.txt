@@ -272,3 +272,32 @@ class Solution {
 	}
 	
 }
+
+// 第十一题 盛最多水的容器_双指针法 Java
+// 双指针解法的正确性证明见网页
+// https://leetcode-cn.com/problems/container-with-most-water/solution/sheng-zui-duo-shui-de-rong-qi-by-leetcode-solution/
+public class Solution {
+	public int maxArea(int[] height) {
+		// 左右指针
+		int le = 0, r = height.length - 1;
+		// 返回值ans
+		int ans = 0;
+		// 当左指针大于右指针时，结束循环
+		while (le < r) {
+			// 计算当前左右指针指向的边界形成的容器的面积
+			int area = Math.min(height[le], height[r]) * (r - 1);
+			// 刷新ans，记录当前最大值
+			ans = Math.max(ans, area);
+			//如果左指针指向的边界的值小于右指针的，左指针向右移动
+			if (height[le] <= height[r]) {
+				le++;
+			}
+			// 如果右指针指向的边界的值小于左指针的，右指针向左移动
+			else {
+				r--;
+			}
+			
+		}
+		return ans;
+	}
+}

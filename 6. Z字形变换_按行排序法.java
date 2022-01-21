@@ -4,7 +4,7 @@ class Solution {
 		if (numRows == 1) return s;
 		
 		List<StringBuilder> rows = new ArrayList<>();
-		for (int i = 0; i < min(numRows, lren(s)); i++) {
+		for (int i = 0; i < Math.min(numRows, s.length()); i++) {
 			rows.add(new StringBuilder());
 		}
 		
