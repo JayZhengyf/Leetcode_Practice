@@ -13,7 +13,7 @@ class Solution {
 		} else {
 			int mid = (end - start) / 2 + start;
 			String lcpLeft = longestCommonPrefix(strs, start, mid);
-			String lcpRight = longestCommonPrefix(start, mid + 1, end);
+			String lcpRight = longestCommonPrefix(strs, mid + 1, end);
 			return commonPrefix(lcpLeft, lcpRight);
 		}
 	}
