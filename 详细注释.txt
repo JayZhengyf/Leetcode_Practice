@@ -351,3 +351,69 @@ class Solution {
 		return ans;	
 	}
 }
+
+// 第十七题 电话号码的数字组合 回溯法 C
+char phoneMap[11][5] = {
+	"\0", "\0", "abc\0","def\0", "ghi\0", "jkl\0", "mno\0", "pqrs\0", "tuv\0", "wxyz\0"
+};
+
+// 存储数字的一维数组
+char* digits_tmp;
+// 数字长度
+int digits_size;
+
+// 存储数字对应的所有字母组合
+// 二维数组
+// combinations中嵌套combination
+char** combinations;
+int combinations_size;
+
+// 存储一种字母组合
+// 一维数组
+char* combination;
+int combination_size;
+
+void backtrack(int index) {
+	if(index == digits_size) {
+		char* tmp = malloc(sizeof(char) * (combination_size + 1));
+		// // 从存储区combination复制sizeof...个字符到tmp
+		memcpy(tmp, combination, sizeof(char) * (combination_size + 1));
+		combinations[combination_sizes++] = tmp
+	} else {
+		char digit = digits_tmp[index];
+		// 从phoneMap中提取数字对应的字符串
+		// 得到的是一个一维数组
+		char* letters = phoneMap[digit - '0'];
+		int len = strlen(letters);
+		
+		for (int i = 0; i < len; i++) {
+			combination[combination_size++] = letters[i];
+			combination[combination_size] = 0;
+			backtrack(index + 1);
+			combination[combination_size--] = 0;
+		}
+	}
+}
+
+char** letterCombinations(char* digits, int* returnSize) {
+	combination_size = combinations_size = 0;
+	digits_tmp = digits;
+	digits_size = strlen(digits);
+	
+	if (digits_size == 0) {
+		*returnSize = 0;
+		return combinations;
+	}
+	int num = 1;
+	
+	// 计算所有可能情况
+	// 一位数字最多对应四个字母
+	// 4 * digits_size即，可能最大的情况
+	for (int i = 0; i < digits_size; i++) num *= 4;
+	combinations = malloc(sizeof(char*) * num);
+	combination = malloc(sizeof(char*) * digits_size);
+	// 开始回溯
+	backtrack(0);
+	*returnSize = combination_size;
+	return combinations;
+}

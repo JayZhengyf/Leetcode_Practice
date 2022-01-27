@@ -7,11 +7,13 @@ char *digits_tmp;
 // 数组中元素个数
 int digits_size;
 
+// 存储所有字母组合
 // 二维数组
 // combinations中嵌套combination
 char **combinations;
 int combinations_size;
 
+// 存储字母组合
 // 一维数组
 char *combination;
 int combination_size;
@@ -53,7 +55,7 @@ char** letterCombinations(char* digits, int* returnSize) {
 	int num = 1;
 	// 计算所有可能的情况
 	// 一位数字最多有四种情况
-	// 4 * digits_size即，最大可能情况
+	// 4 * digits_size即，可能最大情况
 	for (int i = 0; i < digits_size; i++) num *= 4;
 	// 初始化二维数组的空间
 	combinations = malloc(sizeof(char*) * num);
