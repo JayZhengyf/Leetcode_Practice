@@ -417,3 +417,42 @@ char** letterCombinations(char* digits, int* returnSize) {
 	*returnSize = combination_size;
 	return combinations;
 }
+
+
+
+// 第十九题 删除链表的倒数第N个结点 双指针法 C
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+
+struct ListNode* removeNthFromEnd(struct ListNode* head, int n) {
+	struct ListNode* dummy = malloc(sizeof(struct ListNode));
+	// 在head之前加入一个哑结点dummy，方便控制head
+	dummy->val = 0, dummy->next = head;
+	// first初始从head开始移动
+	// second初始从dummy开始移动
+	struct ListNode* first = head;
+	struct ListNode* second = dummy;
+	
+	// first先移动n个结点
+	for (int i = 0; i < n; i++) {
+		first = first->next;
+	}
+	// first和second同时开始移动
+	// first一直移动到NULL
+	while (first) {
+		first = first->next;
+		second = second->next;
+	}
+	
+	// 此时second指向目标结点的前驱节点
+	second->next = second->next->next;
+	struct ListNode* ans = dummy->next;
+	// 返回头指针
+	return  ans;
+}
