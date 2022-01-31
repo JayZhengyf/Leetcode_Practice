@@ -1,8 +1,8 @@
 class Solution {
 	ArrayList[] cache = new ArrayList[100];
-	
-	
-	// generate返回的是n个括号的有效组合的列表
+
+	// "()"为一组括号
+	// generate返回的是n组括号的有效组合的列表
 	public List<String> generate(int n) {
 		if (cache[n] != null) {
 			return cache[n];
