@@ -2,7 +2,8 @@ class Solution {
 	public int jump(int[] nums) {
 		int length = nums.length;
 		// 上一次的边界值（下一次的最右起跳点）
-		// 在这一点一定会跳
+		// 每次在这一点跳跃
+		// 以此统计step
 		int end = 0;  
 		int maxPosition = 0;  // 目前的边界值
 		int steps = 0;
