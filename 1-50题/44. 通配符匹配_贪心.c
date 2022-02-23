@@ -35,7 +35,7 @@ bool isMatch(char* s, char* p) {
 	// 此时我们正在 s 中寻找某个 u_i
 	// sRecord和pRecord表示u_i在s和p中的起始位置
 	int sIndex = 0, pIndex = 0;
-	// 初始化为-1，表示模式p的首字符不为'*'
+	// 初始化为-1，将模式p的首字符不为'*'的情况考虑在内
 	int sRecord = -1, pRecord = -1;
 	while (sIndex < len_s && pIndex < len_p) {
 		// 如果遇到'*'，说明找到了u_i，开始寻找u_i+1
@@ -51,7 +51,7 @@ bool isMatch(char* s, char* p) {
 		} 
 		// 如果两个字符不匹配，就需要重新寻找u_i
 		// 枚举下一个s中的起始位置
-		// 如果sRecord仍是-1，说明没有重新进行匹配的机会 
+		// 如果sRecord == -1，说明没有重新进行匹配的机会 
 		else if (sRecord != -1 && sRecord + 1 < len_s) {
 			sRecord++;
 			sIndex = sRecord;
