@@ -24,15 +24,14 @@ void solve(char*** solutions, int* queens, int n, int row, int columns, int diag
 		solutions[solutionsSize++] = board;
 	} else {
 		// columns | diagnoals1 | diagnoals2 表示所有不可以放置皇后的位置
-		
-		// (2ⁿ - 1) & (~(columns | diagnoals1 | diagnoals2))
-		// 该结果值为1的位置表示可以放置皇后的位置
-		// 这个'1'表示的可以和二进制中的'1'表示的禁止不冲突
-		
+				
 		// x & (-x)可以获得x的二进制表示中的最低位的1的位置
 		// x & (x - 1)可以将x的二进制表示中的最低位的1置成0
 		// '|' 表示或运算，'~' 表示非运算，'&' 表示与运算
 		
+		// (2ⁿ - 1) & (~(columns | diagnoals1 | diagnoals2))
+		// 该结果值为1的位置表示可以放置皇后的位置
+		// 这个'1'表示的可以和二进制中的'1'表示的禁止不冲突
 		int avaliablePositions = ((1 << n) - 1) & (~(columns | diagnoals1 | diagnoals2));
 		
 		while (avaliablePositions != 0) {
