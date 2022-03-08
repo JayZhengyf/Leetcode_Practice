@@ -39,7 +39,7 @@ struct Matrix matrixPow(struct Matrix a, int n) {
 	while (n > 0) {
 		// 判断n是否为奇数
 		// n为奇数时，二进制最低位一定是1
-		// n为偶数时，n & 1返回1，否则返回0
+		// n为偶数时，n & 1返回0；n为奇数时，n & 1返回1
 		if ((n & 1) == 1) {  
 			ret = multiply(ret, a);
 		}
@@ -54,5 +54,5 @@ int climbStairs(int n) {
 	ret.mat[1][1] = 0;
 	ret.mat[0][0] = ret.mat[0][1] = ret.mat[1][0] = 1;
 	struct Matrix res = matrixPow(ret, n);
-	return res.mat[0][0];
+	return res.mat[0][0];  // 这里没看懂
 }
