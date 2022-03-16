@@ -39,7 +39,7 @@ bool exist(char** board, int boardSize, int* boardColSize, char* word) {
 	int wordSize = strlen(word);
 	// 遍历每一个格子
 	for (int i = 0; i < boardSize; ++i) {
-		for (int j = 0; j < boardSize; ++j) {
+		for (int j = 0; j < boardColSize[0]; ++j) {
 			bool flag = check(board, boardSize, boardColSize[0], visited, i, j, word, wordSize, 0);
 			if (flag) {
 				return true;
